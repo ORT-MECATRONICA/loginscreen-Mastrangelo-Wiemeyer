@@ -18,43 +18,33 @@ class MainActivity : AppCompatActivity() {
         val passWritten: EditText = findViewById(R.id.editPass)
         val confirmButton: Button = findViewById(R.id.loginButton)
 
-        var userList : MutableList<String> = mutableListOf()
-        var passList : MutableList<String> = mutableListOf()
+        var usersList : MutableList<User> = mutableListOf()
+
         lateinit var userValue : String
         lateinit var passValue : String
 
+        usersList.add(User("admin","admin"))
+        usersList.add(User("isabella","isalol"))
+        usersList.add(User("sol","sollol"))
+
         confirmButton.setOnClickListener {
-            val username: String = userWritten.text.toString()
-            val password: String = passWritten.text.toString()
+            val myUser: String = userWritten.text.toString()
+            val myPassword: String = passWritten.text.toString()
 
-            userList.add("admin")
-            userList.add("isabella")
-            userList.add("sol")
+            var userEncontrado : User? = usersList.find { u -> u.username == myUser }
 
-            passList.add("admin")
-            passList.add("isalol")
-            passList.add("sollol")
-
-
-            userValue = userList.indexOf(username).toString()
-            passValue = passList.indexOf(password).toString()
-
-
-            if (userList.contains(username)) {
-
-                if(userValue == passValue) {
-
+            if(userEncontrado != null) {
+                if(userEncontrado.password == myPassword)
+                {
                     showSnackbar("Login successful")
-                }
-                else{
+                } else {
                     showSnackbar("Username or password incorrect")
                 }
-
             } else {
                 showSnackbar("Username and password does not exist")
             }
 
-            if (username.isEmpty() && password.isEmpty()) {
+            if (myUser.isEmpty() && myPassword.isEmpty()) {
                 showSnackbar("Please insert your Username and Password")
             }
         }
